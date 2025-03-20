@@ -51,10 +51,10 @@ class Ui_MainWindow(object):
         self.verticalLayoutButtons_2.setContentsMargins(10, 0, 0, 0)    
 
         self.pushButtonChooseFile = QPushButton('Выбрать файл')
+        self.pushButtonChooseFile.setEnabled(False)
         self.verticalLayoutButtons_1.addWidget(self.pushButtonChooseFile)
 
         self.pushButtonUp = QPushButton("Поднять заголовок")
-        self.pushButtonUp.setEnabled(True)
         self.pushButtonUp.setEnabled(False)
         self.verticalLayoutButtons_2.addWidget(self.pushButtonUp)
 

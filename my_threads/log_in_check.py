@@ -100,51 +100,65 @@ class LogInCheck(QtCore.QThread):
 
         # если нет приватного ключа необходимого для получения доступа к БД, создаём его вместе с запросом на подключение
         if not os.path.exists(os.path.join(os.getcwd(),'private_key.pem')): 
-            print(11111)
+            print(1)
             self.create_keys_auth_request()
             if os.path.exists(os.path.join(os.getcwd(),'auth_response')):
                 os.remove(os.path.join(os.getcwd(),'auth_response'))
 
-
             global_vars.ui.action_log_in_check.setEnabled(False)
             global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")
-            global_vars.ui.login_label.setText("Получите файл аутентификации. Для этого отправьте файл auth_request сотрудинку, отвечающему за предоставление доступа!")
+            global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
+            global_vars.ui.header_label.setStyleSheet("color: red")
+            global_vars.ui.header_label.setText("Отправьте файл auth_request из папки с этой программой сотруднику, отвечающему за предоставление доступа. В ответ Вам пришлют файл auth_response, который нужно поместить в одну папку с этой программой")
             global_vars.log_in_status = False
             return 
         elif not os.path.exists(os.path.join(os.getcwd(),'auth_response')):
+            print(2)
             global_vars.ui.action_log_in_check.setEnabled(False)
             global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")
-            global_vars.ui.login_label.setText("Поместите файл auth_response, полученный от сотрудинка, отвечающего за предоставление доступа в одну папку с файлом list_of_penalties.exe!")
+            global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
+            global_vars.ui.header_label.setStyleSheet("color: red")
+            global_vars.ui.header_label.setText("Отправьте файл auth_request из папки с этой программой сотруднику, отвечающему за предоставление доступа. В ответ Вам пришлют файл auth_response, который нужно поместить в одну папку с этой программой")
             global_vars.log_in_status = False
             return 
-        elif params := self.get_params():
+        elif not (params := self.get_params()) :
+            print(3)
             print(params)
             global_vars.ui.action_log_in_check.setEnabled(False)
             global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")            
-            global_vars.ui.login_label.setText('Не удаётся подключиться с данным файлом auth_respons! Удалите файл private_key.pem из папки проекта и перезапустите программу, чтобы сформировать новый запрос на подключение') 
+            global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
+            global_vars.ui.header_label.setStyleSheet("color: red")
+            global_vars.ui.header_label.setText("Возможно у Вас неверный файл auth_response")
             global_vars.log_in_status = False
             return 
         else:
+            print(4)
             global_vars.ui.login_label.setStyleSheet("color: blue")
             global_vars.ui.login_label.setText(f"Проверяем подключение к информационным ресурсам...")
-           # try:
-            print(params)
-            with ps.connect(**params) as conn:
-                cursor = conn.cursor()
-                if conn.get_dsn_parameters():
-                    global_vars.ui.login_label.setStyleSheet("color: green")
-                    global_vars.ui.login_label.setText(f"Подключение к информационным ресурсам установлено!") 
-                    global_vars.ui.action_log_in_check.setEnabled(True)
-                    global_vars.ui.action_log_out.setEnabled(True) 
-                    global_vars.log_in_status = True                
-                    return  
-            #except:
-            #    global_vars.ui.login_label.setStyleSheet("color: red")
-            #    global_vars.ui.login_label.setText(f"Не получается подключиться к информационным ресурсам!")                              
-            #    global_vars.log_in_status = False
+            try:
+                with ps.connect(**params) as conn:
+                    cursor = conn.cursor()
+                    if conn.get_dsn_parameters():
+                        global_vars.ui.pushButtonChooseFile.setEnabled(False)
+                        global_vars.ui.login_label.setStyleSheet("color: green")
+                        global_vars.ui.login_label.setText(f"Подключение к информационным ресурсам установлено!") 
+                        global_vars.ui.action_log_in_check.setEnabled(True)
+                        global_vars.ui.action_log_out.setEnabled(True) 
+                        global_vars.log_in_status = True                
+                        return  
+            except Exception as e:
+                print(e)
+                global_vars.ui.action_log_in_check.setEnabled(False)
+                global_vars.ui.action_log_out.setEnabled(False)            
+                global_vars.ui.login_label.setStyleSheet("color: red")            
+                global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
+                global_vars.ui.header_label.setStyleSheet("color: red")
+                global_vars.ui.header_label.setText("Возможно у Вас неверный файл auth_response или ошибка на стороне сервера")
+                global_vars.log_in_status = False
+                return 
 
          
 
