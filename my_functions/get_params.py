@@ -10,11 +10,16 @@ def get_params():
     """
     Получаем параметры подключения к БД iSales
     """
-    try:
+    if not os.path.exists(os.path.join(os.getcwd(),'auth_response')):
+        return (False,'Файл подключениния не найден в папке проекта!')
+    elif not os.path.exists(os.path.join(os.getcwd(),'private_key.pem')):
+        return (False,'Приватный ключ не найден в папке проекта!') 
+    else:
+        #try:
         with open(os.path.join(os.getcwd(),'auth_response'), 'rb') as file:
             encrypted = file.read()
-    except FileNotFoundError as e:
-        return e
+       # except Exception as e:
+       #     return e
 
     with open(os.path.join(os.getcwd(),"private_key.pem"), "rb") as key_file:
         private_key = serialization.load_pem_private_key(

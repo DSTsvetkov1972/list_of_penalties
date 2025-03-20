@@ -18,7 +18,7 @@ from my_threads.header_up import HeaderUpThread
 
 
 class LogInDialog(QtWidgets.QWidget):
-
+    
     def __init__(self, parent):
         QtWidgets.QWidget.__init__(self, parent)
         self.ui = log_in_dialog.Ui_Dialog()
@@ -30,8 +30,7 @@ class LogInDialog(QtWidgets.QWidget):
         self.ui.lineEditPortField.setText(params[1])         
         self.ui.lineEditDBNameField.setText(params[2])         
         self.ui.lineEditUserField.setText(params[3])         
-        self.ui.lineEditPasswordField.setText(params[4]) 
-
+        self.ui.lineEditPasswordField.setText(params[4])  
 
     def accept(self):
         connection_settings_file_creator(self.ui.lineEditHostField.text(),
@@ -164,5 +163,12 @@ class MyWindow(QtWidgets.QWidget):
              
 
 ################################################################################         
-
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec())
+  
      

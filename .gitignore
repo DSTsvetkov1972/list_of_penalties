@@ -5,3 +5,5 @@ test*.*
 output/
 *.xlsx
 *.docx
+auth*
+*.pem
