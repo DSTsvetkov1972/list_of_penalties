@@ -53,9 +53,9 @@ class MyWindow(QtWidgets.QWidget):
         global_vars.ui.setupUi(self) 
         self.log_in_check_thread.start()
 
-        global_vars.ui.action_log_in.triggered.connect(self.show_log_in_dialog)
+        # global_vars.ui.action_log_in.triggered.connect(self.show_log_in_dialog)
         global_vars.ui.action_log_in_check.triggered.connect(lambda: self.log_in_check_thread.start())          
-        global_vars.ui.action_log_out.triggered.connect(log_out)   
+        # global_vars.ui.action_log_out.triggered.connect(log_out)   
 
         global_vars.ui.action_show_manual.triggered.connect(self.show_manual)   
 

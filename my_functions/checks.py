@@ -50,6 +50,28 @@ def preprocess_container(df):
     err_list = [('№ контейнера', err[0], err[1]) for err in err_df.itertuples()]
     return err_list
 
+def route_subcode_parser(route_subcode):
+        """
+        Подкод перевозки должен содержать в себе корректный номер заказа начиная с 4-ой позиции 
+        """
+        if len(route_subcode) != 12:
+            return ''
+        else:
+            try:
+                i = int(route_subcode[3:11])
+            except ValueError:
+                return ''
+        if 13000000<=i<=80000000:
+            return route_subcode[3:11]
+        else:
+             return ""
+
+def preprocess_route_subcode(df):
+    df['Подкод перевозки (проверенный)'] = df['Подкод перевозки'].apply(route_subcode_parser)
+    err_df = df[['Подкод перевозки','Подкод перевозки (проверенный)']][df['Подкод перевозки (проверенный)']=='']
+    err_list = [('Подкод перевозки', err[0], err[1]) for err in err_df.itertuples()]
+    return err_list
+
 def header_checker(sample_columns:list, header_row:list )->list:
     """функция проверяет, чтобы таблица содержала нужные заголовки и
     чтобы заголовки не повторялись.
@@ -68,5 +90,4 @@ def header_checker(sample_columns:list, header_row:list )->list:
     return err_list    
 
 if __name__ == '__main__':
-    df = pd.DataFrame(['a','b','2022-12-03','c', '01-01-2022'], columns=['Дата отправки'])
-    print(preprocess_datetime(df))
+    print(route_subcode_parser('630324317215'))

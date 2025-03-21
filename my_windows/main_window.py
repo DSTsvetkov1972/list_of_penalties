@@ -66,7 +66,7 @@ class Ui_MainWindow(object):
         self.pushButtonOpenFile.setEnabled(False)        
         self.verticalLayoutButtons_2.addWidget(self.pushButtonOpenFile)
 
-        self.pushButtonPreprocessing = QPushButton("Проверить контейнеры и даты отправки")
+        self.pushButtonPreprocessing = QPushButton("Проверить контейнеры и подкоды перовозок")
         self.pushButtonPreprocessing.setEnabled(False)        
         self.verticalLayoutButtons_2.addWidget(self.pushButtonPreprocessing)
 
@@ -123,23 +123,25 @@ class Ui_MainWindow(object):
 #####################################################################################
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setGeometry(QRect(0, 0, 1366, 28))
+      
+        #self.menu = QMenu(self.menubar)
+        #self.menu.setTitle("Подключение к DWH")
+        #self.menubar.addAction(self.menu.menuAction())           
 
-        self.menu = QMenu(self.menubar)
-        self.menu.setTitle("Подключение к DWH")
-        self.menubar.addAction(self.menu.menuAction())           
+        #self.action_log_in = QAction(MainWindow)
+        #self.action_log_in.setText("Подключиться")  
+        #self.menu.addAction(self.action_log_in)
 
-        self.action_log_in = QAction(MainWindow)
-        self.action_log_in.setText("Подключиться")  
-        self.menu.addAction(self.action_log_in)
-
-        self.action_log_in_check = QAction(MainWindow)
+        self.action_log_in_check = QAction(self.menubar)
         self.action_log_in_check.setText("Проверить подключение")
-        self.menu.addAction(self.action_log_in_check)         
+        self.menubar.addAction(self.action_log_in_check)         
 
-        self.action_log_out = QAction(MainWindow)
-        self.action_log_out.setText("Отключиться")
-        self.menu.addAction(self.action_log_out)  
         
+        #self.action_log_out = QAction(MainWindow)
+        #self.action_log_out.setText("Отключиться")
+        #self.menu.addAction(self.action_log_out)  
+       
+
         self.action_show_manual = QAction(self.menubar)
         self.action_show_manual.setText("Инструкция") 
         self.menubar.addAction(self.action_show_manual)  

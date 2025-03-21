@@ -1,17 +1,21 @@
 from PySide6 import QtCore, QtWidgets
 from colorama import Fore
-# from my_functions.dwh import Client
+
 from my_functions.main_window import translit, load_file_sheet_name
+
 import global_vars
 import pandas as pd
-import re, os
+
+
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+
 import psycopg2 as ps
 from psycopg2 import Error
+
 import pickle
 import os
 
@@ -106,7 +110,7 @@ class LogInCheck(QtCore.QThread):
                 os.remove(os.path.join(os.getcwd(),'auth_response'))
 
             global_vars.ui.action_log_in_check.setEnabled(False)
-            global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")
             global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -116,7 +120,7 @@ class LogInCheck(QtCore.QThread):
         elif not os.path.exists(os.path.join(os.getcwd(),'auth_response')):
             print(2)
             global_vars.ui.action_log_in_check.setEnabled(False)
-            global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")
             global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -127,7 +131,7 @@ class LogInCheck(QtCore.QThread):
             print(3)
             print(params)
             global_vars.ui.action_log_in_check.setEnabled(False)
-            global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_out.setEnabled(False)            
             global_vars.ui.login_label.setStyleSheet("color: red")            
             global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -140,19 +144,30 @@ class LogInCheck(QtCore.QThread):
             global_vars.ui.login_label.setText(f"Проверяем подключение к информационным ресурсам...")
             try:
                 with ps.connect(**params) as conn:
-                    cursor = conn.cursor()
+                    cur = conn.cursor()
+                    sql_column_names = "select column_name from information_schema.columns where table_name = 'equipments_docs'"
+                    cur.execute(sql_column_names)
+                    column_names = [column_name[0] for column_name in  cur.fetchall()]
+                    print(column_names)
+
+                    sql_rows = "select * from equipments_docs"
+                    cur.execute(sql_rows)
+                    global_vars.equipments_docs_df = pd.DataFrame(cur.fetchall(), columns=column_names)  
+                    print(global_vars.equipments_docs_df)               
+
+                    # print(conn.get_dsn_parameters())
                     if conn.get_dsn_parameters():
-                        global_vars.ui.pushButtonChooseFile.setEnabled(False)
+                        global_vars.ui.pushButtonChooseFile.setEnabled(True)
                         global_vars.ui.login_label.setStyleSheet("color: green")
                         global_vars.ui.login_label.setText(f"Подключение к информационным ресурсам установлено!") 
                         global_vars.ui.action_log_in_check.setEnabled(True)
-                        global_vars.ui.action_log_out.setEnabled(True) 
+                        # global_vars.ui.action_log_out.setEnabled(True) 
                         global_vars.log_in_status = True                
                         return  
             except Exception as e:
                 print(e)
                 global_vars.ui.action_log_in_check.setEnabled(False)
-                global_vars.ui.action_log_out.setEnabled(False)            
+                # global_vars.ui.action_log_out.setEnabled(False)            
                 global_vars.ui.login_label.setStyleSheet("color: red")            
                 global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
                 global_vars.ui.header_label.setStyleSheet("color: red")

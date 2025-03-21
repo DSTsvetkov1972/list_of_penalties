@@ -2,7 +2,7 @@ from PySide6 import QtCore
 import pandas as pd
 import global_vars
 from my_functions.main_window import fill_in_err_table, fill_in_table, load_file_sheet_name
-from my_functions.checks import preprocess_datetime, preprocess_container
+from my_functions.checks import preprocess_route_subcode, preprocess_container
 from colorama import Fore
 
 
@@ -25,9 +25,11 @@ class PreprocThread(QtCore.QThread):
         global_vars.df_to_insert = global_vars.df_to_insert.map(str)
 
         err_list = []
+        
         global_vars.ui.footer_label.setStyleSheet('color: blue')             
-        global_vars.ui.footer_label.setText(f"Проверяем столбец 'Дата отправки'")
-        err_list += preprocess_datetime(global_vars.df_to_insert)
+        global_vars.ui.footer_label.setText(f"Проверяем столбец 'Подкод перевозки'")
+        err_list += preprocess_route_subcode(global_vars.df_to_insert)
+
         global_vars.ui.footer_label.setStyleSheet('color: blue')             
         global_vars.ui.footer_label.setText(f"Проверяем столбец '№ контейнера'")        
         err_list += preprocess_container(global_vars.df_to_insert)
@@ -36,10 +38,10 @@ class PreprocThread(QtCore.QThread):
             fill_in_err_table(['колонка','строка','значение'], err_list)
             global_vars.ui.err_tableWidget.setVisible(True) 
             global_vars.ui.footer_label.setStyleSheet('color: red')             
-            global_vars.ui.footer_label.setText(f"Некоторые значения столбцов 'Дата отправки' и '№ контейнера' содержат некорректные значения")
+            global_vars.ui.footer_label.setText(f"Некоторые значения столбцов {global_vars.sample_columns} содержат некорректные значения")
         else:
             global_vars.ui.footer_label.setStyleSheet('color: green')             
-            global_vars.ui.footer_label.setText(f"Столбцы 'Дата отправки' и '№ контейнера' содержат корректные значения")
+            global_vars.ui.footer_label.setText(f"Столбцы {global_vars.sample_columns} содержат корректные значения")
 
 
     def starter(self):
