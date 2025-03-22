@@ -4,6 +4,7 @@ from my_functions.dwh import execute_sql_click, insert_from_df, get_df_of_click
 from my_functions.main_window import translit, load_file_sheet_name
 import global_vars
 import os
+import pandas as pd
 from datetime import datetime
 from win32com.shell import shell, shellcon
 
@@ -17,7 +18,6 @@ class LoadInDWHThread(QtCore.QThread):
         global_vars.ui.footer_label.setStyleSheet('color: blue')
         global_vars.ui.footer_label.setText(f"Подготавливаем данные к загрузке в DWH...") 
 
-        rows_number_column_name = 'Строка в исходнике'            
    
             
 
@@ -25,9 +25,34 @@ class LoadInDWHThread(QtCore.QThread):
 
         global_vars.ui.footer_label.setStyleSheet('color: blue')        
         global_vars.ui.footer_label.setText(f"Создаём таблицу {global_vars.dwh_table_name} в DWH...") 
-        
 
- 
+        global_vars.df_to_insert = global_vars.df_to_insert.map(str)
+        global_vars.equipments_docs_df = global_vars.equipments_docs_df.map(str)
+        print(global_vars.df_to_insert.info())
+        print(global_vars.equipments_docs_df.info())        
+
+        global_vars.ui.footer_label.setStyleSheet('color: blue')            
+        global_vars.ui.footer_label.setText("Шаг 1 из 1. Подтягиваем информацию из БД...")
+
+        res_df = pd.merge(global_vars.df_to_insert, global_vars.equipments_docs_df, how='left', on=['sent_number_equipment', 'order_id'])
+
+
+
+        global_vars.ui.footer_label.setStyleSheet('color: blue')            
+        global_vars.ui.footer_label.setText("Шаг 2 из 4. Записываем результат в файл Эксель...")
+        res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),f'{global_vars.prog_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
+
+        res_df.to_excel(res_file_name, index=False)
+
+        global_vars.ui.footer_label.setStyleSheet('color: blue')            
+        global_vars.ui.footer_label.setText("Шаг 3 из 3. Подгоняем ширины столбцов...")
+
+        global_vars.ui.footer_label.setStyleSheet('color: green')            
+        global_vars.ui.footer_label.setText(f"Результат сохранен в загрузках. Имя файла: {res_file_name}")
+
+        os.startfile(res_file_name)
+
+        """
         sql = f'''CREATE OR REPLACE TABLE {global_vars.dwh_table_name}
               (`Ст. Отправления` String,
               `Ст. Назначения` String,
@@ -78,14 +103,14 @@ class LoadInDWHThread(QtCore.QThread):
         global_vars.ui.footer_label.setText("Шаг 4 из 4. Записываем результат в файл Эксель...")
 
         # res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),f'unauthorized_seuizer_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.csv')
-        res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),f'unauthorized_seuizer_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
+
         
         print(f'Стартовала запись датафрейма в Эксель-файл. df.memory_usage {df.memory_usage().sum()}')
 
         try: # df.memory_usage().sum() <= 200000000 :
             df.to_excel(res_file_name, index=False)
             print('Файл записан. Открываем...')
-            os.startfile(res_file_name)
+            
             global_vars.ui.footer_label.setStyleSheet('color: green')            
             global_vars.ui.footer_label.setText(f"Результат сохранен в {res_file_name}")
         except:
@@ -94,7 +119,7 @@ class LoadInDWHThread(QtCore.QThread):
    
         # print(global_vars.dwh_table_name)
         execute_sql_click(f"DROP TABLE IF EXISTS {global_vars.dwh_table_name}", operation_name = 'Удаляем временную таблицу')
-
+        """
 
         
 

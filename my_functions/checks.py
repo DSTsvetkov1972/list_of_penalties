@@ -45,8 +45,8 @@ def container_parser(container_number):
             return container_number
 
 def preprocess_container(df):
-    df['№ контейнера (проверенный)'] = df['№ контейнера'].apply(container_parser)
-    err_df = df[['№ контейнера','№ контейнера (проверенный)']][df['№ контейнера (проверенный)']=='']
+    df['sent_number_equipment'] = df['№ контейнера'].apply(container_parser)
+    err_df = df[['№ контейнера','sent_number_equipment']][df['sent_number_equipment']=='']
     err_list = [('№ контейнера', err[0], err[1]) for err in err_df.itertuples()]
     return err_list
 
@@ -67,8 +67,8 @@ def route_subcode_parser(route_subcode):
              return ""
 
 def preprocess_route_subcode(df):
-    df['Подкод перевозки (проверенный)'] = df['Подкод перевозки'].apply(route_subcode_parser)
-    err_df = df[['Подкод перевозки','Подкод перевозки (проверенный)']][df['Подкод перевозки (проверенный)']=='']
+    df['order_id'] = df['Подкод перевозки'].apply(route_subcode_parser)
+    err_df = df[['Подкод перевозки','order_id']][df['order_id']=='']
     err_list = [('Подкод перевозки', err[0], err[1]) for err in err_df.itertuples()]
     return err_list
 

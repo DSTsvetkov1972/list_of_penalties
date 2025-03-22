@@ -20,9 +20,9 @@ class PreprocThread(QtCore.QThread):
         
         global_vars.df_to_insert = global_vars.df.iloc[global_vars.header_row:]
         global_vars.df_to_insert.columns = list(global_vars.df.iloc[global_vars.header_row-1])
-        global_vars.df_to_insert = global_vars.df_to_insert[list(global_vars.sample_columns)]
+        #global_vars.df_to_insert = global_vars.df_to_insert[list(global_vars.sample_columns)]
         
-        global_vars.df_to_insert = global_vars.df_to_insert.map(str)
+
 
         err_list = []
         

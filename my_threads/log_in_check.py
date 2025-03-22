@@ -144,16 +144,9 @@ class LogInCheck(QtCore.QThread):
             global_vars.ui.login_label.setText(f"Проверяем подключение к информационным ресурсам...")
             try:
                 with ps.connect(**params) as conn:
-                    cur = conn.cursor()
-                    sql_column_names = "select column_name from information_schema.columns where table_name = 'equipments_docs'"
-                    cur.execute(sql_column_names)
-                    column_names = [column_name[0] for column_name in  cur.fetchall()]
-                    print(column_names)
-
                     sql_rows = "select * from equipments_docs"
-                    cur.execute(sql_rows)
-                    global_vars.equipments_docs_df = pd.DataFrame(cur.fetchall(), columns=column_names)  
-                    print(global_vars.equipments_docs_df)               
+                    global_vars.equipments_docs_df = pd.read_sql(sql_rows, conn)  
+                    #print(Fore.YELLOW, global_vars.equipments_docs_df.info(), Fore.RESET)               
 
                     # print(conn.get_dsn_parameters())
                     if conn.get_dsn_parameters():
