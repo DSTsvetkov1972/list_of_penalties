@@ -16,46 +16,60 @@ class LoadInDWHThread(QtCore.QThread):
 
 
     def run(self):
-        load_file_sheet_name()
-        global_vars.ui.footer_label.setStyleSheet('color: blue')
-        global_vars.ui.footer_label.setText(f"Подготавливаем данные к загрузке в DWH...") 
+        try:
+            load_file_sheet_name()
+            global_vars.ui.footer_label.setStyleSheet('color: blue')
+            global_vars.ui.footer_label.setText(f"Подготавливаем данные к загрузке в DWH...") 
 
    
             
 
         #df_to_Insert = preprocessing(global_vars.df, global_vars.header_row, global_vars.horizontal_headers, global_vars.column_formats, rows_number_column_name)
 
-        global_vars.ui.footer_label.setStyleSheet('color: blue')        
-        global_vars.ui.footer_label.setText(f"Создаём таблицу {global_vars.dwh_table_name} в DWH...") 
 
-        global_vars.df_to_insert = global_vars.df_to_insert.map(str)
-        global_vars.equipments_docs_df = global_vars.equipments_docs_df.map(str)
-        print(global_vars.df_to_insert.info())
-        print(global_vars.equipments_docs_df.info())        
+            global_vars.df_to_insert = global_vars.df_to_insert.map(str)
+            global_vars.ui.footer_label.setText(f"A") 
+
+
+            global_vars.equipments_docs_df = global_vars.equipments_docs_df.map(str)
+            global_vars.ui.footer_label.setText(f"B")      
+
+            #print(global_vars.df_to_insert.info())
+            #print(global_vars.equipments_docs_df.info())        
+
+            global_vars.ui.footer_label.setStyleSheet('color: blue')            
+            global_vars.ui.footer_label.setText("Шаг 1 из 4. Подтягиваем информацию из БД...")
+
+            res_df = pd.merge(global_vars.df_to_insert, global_vars.equipments_docs_df, how='left', on=['sent_number_equipment', 'order_id'])
+
+
+
+
+
+            global_vars.ui.footer_label.setStyleSheet('color: blue')            
+            global_vars.ui.footer_label.setText(f"Шаг 2 из 4. Записываем результат в файл Эксель {len(res_df)} строк...")
+            res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),f'{global_vars.prog_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
+
+
+            res_df.to_excel(res_file_name, index=False)
+
+
+
+            global_vars.ui.footer_label.setStyleSheet('color: blue')            
+            global_vars.ui.footer_label.setText("Шаг 3 из 4. Подгоняем ширины столбцов...")
+
+            wb = load_workbook(res_file_name)
+            ws = wb.active
+
+            for n, column in enumerate(res_df.columns, 1):
+                # print(n, column)
+                ws.column_dimensions[get_column_letter(n)].width = len(str(column))*1.1+1
+                
+        except Exception as e:
+            global_vars.ui.footer_label.setText(f"{e}. Строк {len(res_df)}")
 
         global_vars.ui.footer_label.setStyleSheet('color: blue')            
-        global_vars.ui.footer_label.setText("Шаг 1 из 3. Подтягиваем информацию из БД...")
-
-        res_df = pd.merge(global_vars.df_to_insert, global_vars.equipments_docs_df, how='left', on=['sent_number_equipment', 'order_id'])
-
-
-
-        global_vars.ui.footer_label.setStyleSheet('color: blue')            
-        global_vars.ui.footer_label.setText("Шаг 2 из 3. Записываем результат в файл Эксель...")
-        res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),f'{global_vars.prog_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
-
-        res_df.to_excel(res_file_name, index=False)
-
-        global_vars.ui.footer_label.setStyleSheet('color: blue')            
-        global_vars.ui.footer_label.setText("Шаг 3 из 3. Подгоняем ширины столбцов...")
-
-        wb = load_workbook(res_file_name)
-        ws = wb.active
-
-        for n, column in enumerate(res_df.columns, 1):
-            # print(n, column)
-            ws.column_dimensions[get_column_letter(n)].width = len(str(column))*1.1+1
-        
+        global_vars.ui.footer_label.setText("Шаг 4 из 4. Замораживаем строку заголовока...")        
         ws.freeze_panes = ws.cell(column=1, row=2)
 
         wb.save(res_file_name)
@@ -64,6 +78,7 @@ class LoadInDWHThread(QtCore.QThread):
 
         global_vars.ui.footer_label.setStyleSheet('color: green')            
         global_vars.ui.footer_label.setText(f"Результат сохранен в загрузках. Имя файла: {res_file_name}")
+
 
         os.startfile(res_file_name)
 

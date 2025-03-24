@@ -14,7 +14,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
 import psycopg2 as ps
-from psycopg2 import Error
 
 import pickle
 import os
@@ -109,8 +108,7 @@ class LogInCheck(QtCore.QThread):
             if os.path.exists(os.path.join(os.getcwd(),'auth_response')):
                 os.remove(os.path.join(os.getcwd(),'auth_response'))
 
-            global_vars.ui.action_log_in_check.setEnabled(False)
-            #global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_in_check.setEnabled(False)
             global_vars.ui.login_label.setStyleSheet("color: red")
             global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -119,8 +117,7 @@ class LogInCheck(QtCore.QThread):
             return 
         elif not os.path.exists(os.path.join(os.getcwd(),'auth_response')):
             print(2)
-            global_vars.ui.action_log_in_check.setEnabled(False)
-            #global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_in_check.setEnabled(False)        
             global_vars.ui.login_label.setStyleSheet("color: red")
             global_vars.ui.login_label.setText("Нет подключения к информационным ресурсам.")
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -130,8 +127,7 @@ class LogInCheck(QtCore.QThread):
         elif not (params := self.get_params()) :
             print(3)
             print(params)
-            global_vars.ui.action_log_in_check.setEnabled(False)
-            #global_vars.ui.action_log_out.setEnabled(False)            
+            #global_vars.ui.action_log_in_check.setEnabled(False)        
             global_vars.ui.login_label.setStyleSheet("color: red")            
             global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
             global_vars.ui.header_label.setStyleSheet("color: red")
@@ -153,13 +149,13 @@ class LogInCheck(QtCore.QThread):
                         global_vars.ui.pushButtonChooseFile.setEnabled(True)
                         global_vars.ui.login_label.setStyleSheet("color: green")
                         global_vars.ui.login_label.setText(f"Подключение к информационным ресурсам установлено!") 
-                        global_vars.ui.action_log_in_check.setEnabled(True)
+                        #global_vars.ui.action_log_in_check.setEnabled(True)
                         # global_vars.ui.action_log_out.setEnabled(True) 
                         global_vars.log_in_status = True                
                         return  
             except Exception as e:
                 print(e)
-                global_vars.ui.action_log_in_check.setEnabled(False)
+                #global_vars.ui.action_log_in_check.setEnabled(False)
                 # global_vars.ui.action_log_out.setEnabled(False)            
                 global_vars.ui.login_label.setStyleSheet("color: red")            
                 global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
