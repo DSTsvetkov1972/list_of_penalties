@@ -51,4 +51,4 @@ GUI позоволяет выбрать исходную книгу эксель
 задайте параметры "One File", "Window DBased (hide hte console)"
 Нажмите "CONVERT .PY TO .EXE".
 
-Исполняемый файл появится во вложенной папке ~\...\unauthorized_seizure\output\unauthorized_seizure.exe
+Исполняемый файл появится во вложенной папке ~\...\list_of_penalties\output\list_of_penalties.exe
