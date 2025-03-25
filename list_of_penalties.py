@@ -15,7 +15,7 @@ from my_threads.preproc import PreprocThread
 from my_threads.load_in_dwh import LoadInDWHThread
 from my_threads.header_up import HeaderUpThread
 
-
+'''
 class LogInDialog(QtWidgets.QWidget):
     
     def __init__(self, parent):
@@ -43,6 +43,7 @@ class LogInDialog(QtWidgets.QWidget):
     #######################################################################
     #######################################################################   
     log_in_check_thread = LogInCheck() # создаём поток проверки подключения     
+'''
 
 class MyWindow(QtWidgets.QWidget):
     def __init__ (self, parent=None):
@@ -91,11 +92,13 @@ class MyWindow(QtWidgets.QWidget):
 
  
         global_vars.header_row = 1
-
+    
+    '''
     def show_log_in_dialog(self):
         self.login_dialog_window = LogInDialog(parent = None)
         # self.login_dialog_window.setWindowModality(True)
         self.login_dialog_window.show()
+    '''
 
     def show_dev_info(self):
         QtWidgets.QMessageBox.about(None, "Контакты разработчиков", global_vars.dev_info)
