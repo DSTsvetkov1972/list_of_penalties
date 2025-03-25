@@ -1,7 +1,5 @@
-from PySide6 import QtCore, QtWidgets
-from colorama import Fore
-
-from my_functions.main_window import translit, load_file_sheet_name
+from PySide6 import QtCore
+# from colorama import Fore
 
 import global_vars
 import pandas as pd

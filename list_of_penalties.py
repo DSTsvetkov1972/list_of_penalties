@@ -2,7 +2,7 @@ from PySide6 import QtWidgets, QtCore
 from my_windows import main_window, log_in_dialog
 import global_vars
 import pandas as pd
-from my_functions.main_window import header_down, fill_in_table, translit
+from my_functions.main_window import header_down, fill_in_table
 import os
 import re
 from colorama import Fore
@@ -154,7 +154,7 @@ class MyWindow(QtWidgets.QWidget):
 
              
 
-################################################################################         
+################################################################################
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
