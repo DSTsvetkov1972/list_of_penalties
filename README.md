@@ -33,22 +33,22 @@ GUI позоволяет выбрать исходную книгу эксель
 # Инструкция по созданию исполняемого файла из файлов репозитория исходного кода
 
 * Скопируйте проект из репозитория на локальный компьютер с предустановленным >=Python3.10<=Python3.12 (на 2025-02-09 для python3.13 библотеки загруженные через pip "отказывались" работать и требовали обнавления некоторых компонентов Windows)
-* Перейдите в папку проекта
+* Перейдите в папку проекта:
 ```cd ~\...\list_of_penalties```
 
-* Создайте виртуальное окружение
+* Создайте виртуальное окружение:
 ```python -m venv .venv```
 
-* Активируйте виртуальное окружение
-```.venv/Scrits/ Activate.ps1```
+* Активируйте виртуальное окружение:
+```.venv/Scrits/Activate.ps1```
 
-* Установите зависимости
-```pip install -r requirements.txt```
+* Установите зависимости:
+```python -m pip install --upgrade pip; pip install -r requirements.txt```
 
-* Запустите auto-py-to-exe 
+* Запустите auto-py-to-exe:
 ```auto-py-to-exe -db```
-Выберите файл list_of_penalties.py,
+_Выберите файл list_of_penalties.py,
 задайте параметры "One File", "Window DBased (hide hte console)"
-Нажмите "CONVERT .PY TO .EXE".
+Нажмите "CONVERT .PY TO .EXE"._
 
-Исполняемый файл появится во вложенной папке ~\...\list_of_penalties\output\list_of_penalties.exe
+Исполняемый файл появится во вложенной папке **~\\...\list_of_penalties\output\list_of_penalties.exe**
