@@ -138,6 +138,7 @@ def fill_in_err_table(err_columns_list, header_errors):
 
 
 def fill_in_table():
+    
     global_vars.ui.footer_text.setVisible(False)
     df_view = global_vars.df.iloc[global_vars.header_row: global_vars.header_row + 16]
 
