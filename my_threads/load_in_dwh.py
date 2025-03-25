@@ -1,6 +1,5 @@
 from PySide6 import QtCore, QtWidgets
 from colorama import Fore
-from my_functions.dwh import execute_sql_click, insert_from_df, get_df_of_click
 from my_functions.main_window import translit, load_file_sheet_name
 import global_vars
 import os

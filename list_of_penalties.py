@@ -3,7 +3,6 @@ from my_windows import main_window, log_in_dialog
 import global_vars
 import pandas as pd
 from my_functions.main_window import header_down, fill_in_table, translit
-from my_functions.dwh import log_out, get_params, connection_settings_file_creator
 import os
 import re
 from colorama import Fore
@@ -150,15 +149,8 @@ class MyWindow(QtWidgets.QWidget):
 
 
     def load_in_dwh_thread_starter(self):
-            self.log_in_check_thread.start()
-            if global_vars.log_in_status:
-                params = get_params()
-                global_vars.dwh_table_name = f'{params[2]}.tmp_unauthorized_seizure'
-                self.load_in_dwh_thread.start() # Запускаем поток         
-            else:
-                global_vars.ui.footer_text.setVisible(False) 
-                global_vars.ui.footer_label.setStyleSheet('color: red')            
-                global_vars.ui.footer_label.setText(f'Не удалось загрузить {global_vars.file}. Проверьте подключение к DWH!') 
+        self.load_in_dwh_thread.start() # Запускаем поток         
+
 
              
 
