@@ -77,31 +77,6 @@ def load_file_sheet_name():
     MyComboBoxFormats.set_eanbled_all(True)
 
 
-def from_file_to_csv(f):
-    with open(f, encoding='utf-8') as fn:
-        all_lines = fn.readlines()
-        max = 0
-        min = 0
-        for l in all_lines:
-            l_list = l.split('\t')
-            if len(l_list) > max:
-                max = len(l_list)
-            if len(l_list) < min:
-                min = len(l_list)
-        all_lines_added = []
-        for l in all_lines:
-            l_list = l.split('\t')
-            all_lines_added.append(l + '\t'*(max - len(l_list)))
-
-    list_to_df = [row.split('\t') for row in all_lines_added]
-
-    df = pd.DataFrame(list_to_df)
-    df.fillna('', inplace=True)
-    df.map(str)
-
-    return df
-
-
 def fill_in_view_table(df_view):
 
     row_number = 0

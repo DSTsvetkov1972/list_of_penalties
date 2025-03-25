@@ -16,6 +16,8 @@ global log_in_status            # global_vars.log_in_status
 
 global equipments_docs_df
 
+file_formats_list = ['.xls', 'xlsx', 'xlsm', 'xlsb', '.ods']
+
 checks_dict = {}
 
 # version = '2024-09-19'
