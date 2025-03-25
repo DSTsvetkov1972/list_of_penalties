@@ -1,5 +1,5 @@
 from PySide6 import QtCore
-import pandas as pd
+import config
 import global_vars
 from my_functions.main_window import fill_in_err_table, fill_in_table, load_file_sheet_name
 from my_functions.checks import preprocess_route_subcode, preprocess_container
@@ -38,10 +38,10 @@ class PreprocThread(QtCore.QThread):
             fill_in_err_table(['колонка','строка','значение'], err_list)
             global_vars.ui.err_tableWidget.setVisible(True) 
             global_vars.ui.footer_label.setStyleSheet('color: red')             
-            global_vars.ui.footer_label.setText(f"Некоторые значения столбцов {global_vars.sample_columns} содержат некорректные значения")
+            global_vars.ui.footer_label.setText(f"Некоторые значения столбцов {config.sample_columns} содержат некорректные значения")
         else:
             global_vars.ui.footer_label.setStyleSheet('color: green')             
-            global_vars.ui.footer_label.setText(f"Столбцы {global_vars.sample_columns} содержат корректные значения")
+            global_vars.ui.footer_label.setText(f"Столбцы {config.sample_columns} содержат корректные значения")
 
 
     def starter(self):

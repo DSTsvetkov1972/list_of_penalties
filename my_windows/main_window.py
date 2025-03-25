@@ -18,7 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow, QMenu,
     QMenuBar, QPushButton, QSizePolicy, QStatusBar,QLineEdit, QComboBox,  QInputDialog,  
     QTableView, QTableWidget, QTableWidgetItem, QWidget, QVBoxLayout,)
-import global_vars 
+import config
+
 from datetime import datetime
 
 
@@ -32,7 +33,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(1366, 724)
         MainWindow.setMaximumSize(1366, 724) 
         MainWindow.setMinimumSize(340, 724)         
-        MainWindow.setWindowTitle(f"{global_vars.prog_name} (ver.{global_vars.version})")
+        MainWindow.setWindowTitle(f"{config.prog_name} (ver.{config.version})")
         #MainWindow.setWindowTitle(f"Загрузка Excel или CSV в DWH (ver. {datetime.now().strftime('%Y-%m-%d %H:%M')})")        
        
 

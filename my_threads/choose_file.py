@@ -1,6 +1,7 @@
 from PySide6 import QtWidgets, QtCore
 # from colorama import Fore
 import global_vars
+import config
 import pandas as pd
 import os
 
@@ -25,7 +26,7 @@ class ChooseFileThread(QtCore.QThread):
             global_vars.cant_load_file_reason = 'Пустой файл не может быть загружен!'
             global_vars.can_load_file = False
         else:
-            if global_vars.file[-4:] in global_vars.file_formats_list:
+            if global_vars.file[-4:] in config.file_formats_list:
                 try:
                     with pd.ExcelFile(global_vars.file) as excel_file_obj:
                         global_vars.sheet_names = excel_file_obj.sheet_names
@@ -35,7 +36,7 @@ class ChooseFileThread(QtCore.QThread):
                     global_vars.can_load_file = False
             else:
                 global_vars.df = pd.DataFrame()
-                global_vars.cant_load_file_reason = f'Файл должен быть в формате: {global_vars.file_formats_list}!'
+                global_vars.cant_load_file_reason = f'Файл должен быть в формате: {config.file_formats_list}!'
                 global_vars.can_load_file = False
 
     def starter(self):

@@ -8,7 +8,7 @@ from openpyxl.utils.cell import get_column_letter
 import pandas as pd
 from datetime import datetime
 from win32com.shell import shell, shellcon
-
+import config
 
 class LoadInDWHThread(QtCore.QThread):
     def __init__(self, parent=None):
@@ -32,7 +32,7 @@ class LoadInDWHThread(QtCore.QThread):
             global_vars.ui.footer_label.setStyleSheet('color: blue')
             global_vars.ui.footer_label.setText(f"Шаг 2 из 4. Записываем результат в файл Эксель {len(res_df)} строк...")
             res_file_name = os.path.join(shell.SHGetKnownFolderPath(shellcon.FOLDERID_Downloads),
-                                         f'{global_vars.prog_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
+                                         f'{config.prog_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')
 
             res_df.to_excel(res_file_name, index=False)
 

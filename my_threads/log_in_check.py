@@ -1,6 +1,6 @@
 from PySide6 import QtCore
 # from colorama import Fore
-from config import Config
+import config
 import global_vars
 import pandas as pd
 from cryptography.hazmat.primitives import serialization
@@ -57,8 +57,8 @@ class LogInCheck(QtCore.QThread):
 
         with open(os.path.join(os.getcwd(), 'auth_request'), 'wb') as fp:
             pickle.dump({'public_key': public_key_pem,
-                         'description': Config.description,
-                         'params': Config.params}, fp)
+                         'description': config.description,
+                         'params': config.params}, fp)
 
     def get_params(self):
         """

@@ -2,8 +2,9 @@ import pandas as pd
 from datetime import datetime
 # from colorama import init, Fore, Back, Style
 from PySide6 import QtWidgets, QtCore
+import config
 import global_vars
-from my_widgets.my_combo_box_formats import MyComboBoxFormats
+# from my_widgets.my_combo_box_formats import MyComboBoxFormats
 from my_functions.checks import header_checker
 
 
@@ -32,13 +33,13 @@ def checkHeaders(headers):
 
 
 def load_file_sheet_name():
-    MyComboBoxFormats.set_eanbled_all(False)
+    # MyComboBoxFormats.set_eanbled_all(False)
     if ('loaded_file' in global_vars.__dict__.keys() and 'loaded_sheet_name' in global_vars.__dict__.keys()):
         if (global_vars.file != global_vars.loaded_file or global_vars.sheet_name != global_vars.loaded_sheet_name):
 
             global_vars.ui.footer_label.setStyleSheet('color: blue')
 
-            if global_vars.file[-4:] in global_vars.file_formats_list:
+            if global_vars.file[-4:] in config.file_formats_list:
                 global_vars.ui.footer_label.setText(f'Загружаем весь лист "{global_vars.ui.comboSheets.currentText()}"...')
                 global_vars.df = pd.read_excel(global_vars.file,
                                                header=None,
@@ -57,7 +58,7 @@ def load_file_sheet_name():
             global_vars.ui.footer_label.setText(f'Весь лист "{global_vars.ui.comboSheets.currentText()}" загружен!')
 
     else:
-        if global_vars.file[-4:] in global_vars.file_formats_list:
+        if global_vars.file[-4:] in config.file_formats_list:
             global_vars.df = pd.read_excel(global_vars.file,
                                            header=None,
                                            dtype='string',
@@ -129,15 +130,15 @@ def fill_in_table():
     global_vars.ui.tableWidget.setVerticalHeaderLabels(map(str, list(range(global_vars.header_row+1, global_vars.header_row + 17))))
 
     global_vars.column_formats = []
-    MyComboBoxFormats.instances = []
-    MyComboBoxFormats.all_err_df = pd.DataFrame(columns=['column_number',
-                                                         'Сообщение',
-                                                         'Ячейка LN',
-                                                         'Ячейка RNCN',
-                                                         'Значение'])
+    #MyComboBoxFormats.instances = []
+    #MyComboBoxFormats.all_err_df = pd.DataFrame(columns=['column_number',
+    #                                                     'Сообщение',
+    #                                                     'Ячейка LN',
+    #                                                     'Ячейка RNCN',
+    #                                                     'Значение'])
 
     fill_in_view_table(df_view)
-    header_errors_list = header_checker(global_vars.sample_columns,
+    header_errors_list = header_checker(config.sample_columns,
                                         list(global_vars.horizontal_headers))
 
     if header_errors_list:
@@ -166,7 +167,7 @@ def header_down(self):
         global_vars.ui.footer_label.setText("Ниже опустить не возможно, заголовки!")
     fill_in_table()
     '''
-    header_errors_list = header_checker(global_vars.sample_columns, global_vars.horizontal_headers)
+    header_errors_list = header_checker(config.sample_columns, global_vars.horizontal_headers)
     if header_errors_list:
         fill_in_err_table(['колонка', 'ошибка'], header_errors_list)
         global_vars.ui.err_tableWidget.setVisible(True)
