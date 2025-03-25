@@ -1,11 +1,8 @@
-from PySide6 import QtWidgets, QtCore
-from my_windows import main_window, log_in_dialog
+from PySide6 import QtWidgets
+from my_windows import main_window
 import global_vars
-import pandas as pd
 from my_functions.main_window import header_down, fill_in_table
-import os
-import re
-from colorama import Fore
+# from colorama import Fore
 
 from my_threads.log_in_check import LogInCheck
 from my_threads.choose_file import ChooseFileThread

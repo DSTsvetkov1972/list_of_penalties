@@ -38,16 +38,16 @@ def load_file_sheet_name():
 
             global_vars.ui.footer_label.setStyleSheet('color: blue')
 
-            if global_vars.file[-4:] in ['.xls', 'xlsx', 'xlsm', 'xlsb', '.ods']:
+            if global_vars.file[-4:] in global_vars.file_formats_list:
                 global_vars.ui.footer_label.setText(f'Загружаем весь лист "{global_vars.ui.comboSheets.currentText()}"...')
                 global_vars.df = pd.read_excel(global_vars.file,
                                                header=None,
                                                dtype='string',
                                                engine='calamine',
                                                sheet_name=global_vars.sheet_name)
-            else:
-                global_vars.ui.footer_label.setText('Загружаем весь файл...')
-                global_vars.df = from_file_to_csv(global_vars.file)
+            # else:
+            #    global_vars.ui.footer_label.setText('Загружаем весь файл...')
+            #    global_vars.df = from_file_to_csv(global_vars.file)
             global_vars.df.fillna('', inplace=True)
             global_vars.df.index += 1
             global_vars.df.can_load_file = True
@@ -57,14 +57,14 @@ def load_file_sheet_name():
             global_vars.ui.footer_label.setText(f'Весь лист "{global_vars.ui.comboSheets.currentText()}" загружен!')
 
     else:
-        if global_vars.file[-4:] in ['xlsx', 'xlsm', '.xls', '.ods']:
+        if global_vars.file[-4:] in global_vars.file_formats_list:
             global_vars.df = pd.read_excel(global_vars.file,
                                            header=None,
                                            dtype='string',
                                            engine='calamine',
                                            sheet_name=global_vars.sheet_name)
-        else:
-            global_vars.df = from_file_to_csv(global_vars.file)
+        # else:
+        #    global_vars.df = from_file_to_csv(global_vars.file)
 
         global_vars.df.fillna('', inplace=True)
         global_vars.df.index += 1
@@ -74,7 +74,7 @@ def load_file_sheet_name():
         global_vars.ui.footer_label.setStyleSheet('color: green')
         global_vars.ui.footer_label.setText(f'Весь лист "{global_vars.ui.comboSheets.currentText()}" загружен!')
 
-    MyComboBoxFormats.set_eanbled_all(True)
+    # MyComboBoxFormats.set_eanbled_all(True)
 
 
 def fill_in_view_table(df_view):
