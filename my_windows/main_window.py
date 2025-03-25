@@ -1,31 +1,10 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'main_window.ui'
-##
-## Created by: Qt User Interface Compiler version 6.6.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,Qt,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,QLineEdit, QComboBox,  QInputDialog,  
-    QTableView, QTableWidget, QTableWidgetItem, QWidget, QVBoxLayout,)
+from PySide6.QtCore import QRect,Qt, Qt
+from PySide6.QtGui import QAction
+from PySide6.QtWidgets import (QLabel, QMenuBar, QPushButton, QLineEdit, QComboBox, QTableWidget,  QWidget, QVBoxLayout)
 import config
-
-from datetime import datetime
-
 
 
 class Ui_MainWindow(object):
-
 
     def setupUi(self, MainWindow):
         #MainWindow.setFixedWidth(1366) 
@@ -34,7 +13,7 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(1366, 724) 
         MainWindow.setMinimumSize(340, 724)         
         MainWindow.setWindowTitle(f"{config.prog_name} (ver.{config.version})")
-        #MainWindow.setWindowTitle(f"Загрузка Excel или CSV в DWH (ver. {datetime.now().strftime('%Y-%m-%d %H:%M')})")        
+        #MainWindow.setWindowTitle(f"Загрузка Excel или CSV в DWH (ver. {datetime.now().strftime('%Y-%m-%d %H:%M')})")
        
 
         self.centralwidget = QWidget(MainWindow)
@@ -81,7 +60,7 @@ class Ui_MainWindow(object):
         self.verticalLayoutInfoWidget.setGeometry(QRect(10, 240, 330, 404))
         #self.verticalLayoutInfoWidget.setStyleSheet("background-color: pink")
         self.verticalLayoutInfo= QVBoxLayout(self.verticalLayoutInfoWidget)
-        #self.verticalLayoutInfo.setContentsMargins(10, 10, 10, 10)    
+        #self.verticalLayoutInfo.setContentsMargins(10, 10, 10, 10)
       
         self.err_tableWidget = QTableWidget()
         self.verticalLayoutInfo.addWidget(self.err_tableWidget)
@@ -130,13 +109,13 @@ class Ui_MainWindow(object):
         #self.menubar.addAction(self.menu.menuAction())           
 
         #self.action_log_in = QAction(MainWindow)
-        #self.action_log_in.setText("Подключиться")  
+        #self.action_log_in.setText("Подключиться")
         #self.menu.addAction(self.action_log_in)
 
         self.action_log_in_check = QAction(self.menubar)
         self.action_log_in_check.setText("Проверить подключение")
         self.action_log_in_check.setEnabled(True)        
-        self.menubar.addAction(self.action_log_in_check)         
+        self.menubar.addAction(self.action_log_in_check)
 
         
         #self.action_log_out = QAction(MainWindow)
@@ -150,5 +129,6 @@ class Ui_MainWindow(object):
 
         self.action_show_dev_info = QAction(self.menubar)
         self.action_show_dev_info.setText("Связь с разработчиками") 
-        self.menubar.addAction(self.action_show_dev_info)           
+        self.menubar.addAction(self.action_show_dev_info)
+
         
