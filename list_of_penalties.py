@@ -1,7 +1,8 @@
 from PySide6 import QtWidgets
 from my_windows import main_window
 import global_vars
-from my_functions.main_window import header_down, fill_in_table
+import config
+from my_functions.main_window import header_down
 # from colorama import Fore
 
 from my_threads.log_in_check import LogInCheck
@@ -98,10 +99,10 @@ class MyWindow(QtWidgets.QWidget):
     '''
 
     def show_dev_info(self):
-        QtWidgets.QMessageBox.about(None, "Контакты разработчиков", global_vars.dev_info)
+        QtWidgets.QMessageBox.about(None, "Контакты разработчиков", config.dev_info)
 
     def show_manual(self):
-        QtWidgets.QMessageBox.about(None, "Инструкция", global_vars.manual)        
+        QtWidgets.QMessageBox.about(None, "Инструкция", config.manual)        
      
 
 ####################################################################################
@@ -120,16 +121,11 @@ class MyWindow(QtWidgets.QWidget):
     
     def on_finished_choose_file_thread(self): # Вызывается при завершении потока
         if global_vars.can_load_file:
-            if global_vars.file[-4:] in ['xlsx','.xls']:
-                global_vars.ui.comboSheets.currentIndexChanged.connect(self.choose_sheet_thread.starter) 
-                global_vars.ui.comboSheets.clear()
-                for sheet_name in  global_vars.sheet_names:
-                    global_vars.ui.comboSheets.addItem(sheet_name)                     
-            else:
-                global_vars.ui.comboSheets.setVisible(False)
-                fill_in_table() 
-                global_vars.ui.footer_label.setStyleSheet('color: green')                
-                global_vars.ui.footer_label.setText(f'Файл {global_vars.file} загружен!')
+        #if global_vars.file[-4:] in config.file_formats_list:
+            global_vars.ui.comboSheets.currentIndexChanged.connect(self.choose_sheet_thread.starter) 
+            global_vars.ui.comboSheets.clear()
+            for sheet_name in  global_vars.sheet_names:
+                global_vars.ui.comboSheets.addItem(sheet_name)                     
 
 
             global_vars.ui.pushButtonUp.setEnabled(True)             
