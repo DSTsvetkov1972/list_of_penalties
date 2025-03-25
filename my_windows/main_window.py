@@ -134,6 +134,7 @@ class Ui_MainWindow(object):
 
         self.action_log_in_check = QAction(self.menubar)
         self.action_log_in_check.setText("Проверить подключение")
+        self.action_log_in_check.setEnabled(True)        
         self.menubar.addAction(self.action_log_in_check)         
 
         

@@ -9,7 +9,7 @@ from my_threads.choose_file import ChooseFileThread
 from my_threads.choose_sheet import ChooseSheetThread
 from my_threads.open_file import OpenFileThread
 from my_threads.preproc import PreprocThread
-from my_threads.load_in_dwh import LoadInDWHThread
+from my_threads.get_result import LoadInDWHThread
 from my_threads.header_up import HeaderUpThread
 
 '''
