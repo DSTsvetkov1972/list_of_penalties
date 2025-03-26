@@ -98,7 +98,8 @@ class MyWindow(QtWidgets.QWidget):
             global_vars.ui.header_label.setStyleSheet('color: red')
             global_vars.ui.header_label.setText('Выберите файл для загрузки')
             global_vars.ui.footer_label.setStyleSheet('color: red')
-            global_vars.ui.footer_label.setText(f'Не удалось загрузить {global_vars.file} {global_vars.cant_load_file_reason}')
+            global_vars.ui.footer_label.setText(f'Не удалось загрузить {global_vars.file}\n'
+                                                f'{global_vars.cant_load_file_reason}')
 
         global_vars.ui.verticalLayoutWidgetButtons_1.setEnabled(True)
 
