@@ -17,7 +17,7 @@ class OpenFileThread(QtCore.QThread):
         global_vars.ui.verticalLayoutWidgetButtons_1.setEnabled(False)
         global_vars.ui.verticalLayoutWidgetButtons_2.setEnabled(False)
         global_vars.ui.comboSheets.setEnabled(False)
-        global_vars.ui.footer_text.setVisible(False)
+        # global_vars.ui.footer_text.setVisible(False)
 
     def on_finished(self):
         global_vars.ui.verticalLayoutWidgetButtons_1.setEnabled(True)

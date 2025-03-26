@@ -137,7 +137,7 @@ class LogInCheck(QtCore.QThread):
                         return
             except Exception:
                 global_vars.ui.login_label.setStyleSheet("color: red")
-                global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам')
+                global_vars.ui.login_label.setText('Не удаётся подключиться к информационным ресурсам!')
                 global_vars.ui.header_label.setStyleSheet("color: red")
                 global_vars.ui.header_label.setText("Возможно у Вас неверный файл auth_response или ошибка на стороне сервера")
                 global_vars.log_in_status = False

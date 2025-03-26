@@ -62,12 +62,14 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight = QVBoxLayout(self.verticalLayoutWidgetRight)
         self.verticalLayoutRight.setContentsMargins(10, 0, 0, 0)
 
-        self.login_label = QLabel('Подключитесь к DWH!')
+        self.login_label = QLabel('Подключитесь к информационным системам!')
         self.login_label.setStyleSheet('color: red')
+        self.login_label.setWordWrap(True) 
         self.verticalLayoutRight.addWidget(self.login_label)
 
         self.header_label = QLabel('Выберите файл для загрузки!')
         self.header_label.setStyleSheet('color: red')
+        self.header_label.setWordWrap(True)         
         self.verticalLayoutRight.addWidget(self.header_label)
 
         self.comboSheets = QComboBox()
@@ -80,12 +82,13 @@ class Ui_MainWindow(object):
         self.verticalLayoutRight.addWidget(self.tableWidget)
 
         self.footer_label = QLabel()
+        self.footer_label.setWordWrap(True) 
         self.verticalLayoutRight.addWidget(self.footer_label)
 
-        self.footer_text = QLineEdit()
-        self.footer_text.setReadOnly(True)
-        self.footer_text.setVisible(False)
-        self.verticalLayoutRight.addWidget(self.footer_text)
+        # self.footer_text = QLineEdit()
+        # self.footer_text.setReadOnly(True)
+        # self.footer_text.setVisible(False)
+        # self.verticalLayoutRight.addWidget(self.footer_text)
 
 #####################################################################################
         self.menubar = QMenuBar(MainWindow)

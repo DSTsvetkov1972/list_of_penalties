@@ -37,7 +37,7 @@ class ChooseSheetThread(QtCore.QThread):
         global_vars.ui.verticalLayoutWidgetButtons_2.setEnabled(False)
         global_vars.ui.comboSheets.setEnabled(False)
         global_vars.ui.err_tableWidget.setVisible(False)
-        global_vars.ui.footer_text.setVisible(False)
+        # global_vars.ui.footer_text.setVisible(False)
         global_vars.ui.footer_label.setStyleSheet('color: blue')
         global_vars.ui.footer_label.setText(f'Загружаем несколько начальных строк листа "'
                                             f'{global_vars.ui.comboSheets.currentText()}" для предпросмотра...')

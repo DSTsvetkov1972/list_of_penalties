@@ -92,7 +92,7 @@ class MyWindow(QtWidgets.QWidget):
             global_vars.ui.pushButtonUp.setEnabled(True)
             global_vars.ui.pushButtonDown.setEnabled(True)
             global_vars.ui.pushButtonOpenFile.setEnabled(True)
-            global_vars.ui.header_label.setStyleSheet('color: black')
+            global_vars.ui.header_label.setStyleSheet('color: blue')
             global_vars.ui.header_label.setText(f'{global_vars.file}')
         else:
             global_vars.ui.header_label.setStyleSheet('color: red')

@@ -115,7 +115,7 @@ def fill_in_err_table(err_columns_list, header_errors):
 
 def fill_in_table():
     
-    global_vars.ui.footer_text.setVisible(False)
+    # global_vars.ui.footer_text.setVisible(False)
     df_view = global_vars.df.iloc[global_vars.header_row: global_vars.header_row + 16]
 
     global_vars.ui.tableWidget.setRowCount(len(df_view))
@@ -150,7 +150,7 @@ def fill_in_table():
 
 
 def header_down(self):
-    global_vars.ui.footer_text.setVisible(False)
+    # global_vars.ui.footer_text.setVisible(False)
     global_vars.ui.pushButtonLoader.setEnabled(False)
     global_vars.ui.err_tableWidget.setVisible(False)
     if global_vars.header_row > 1:
